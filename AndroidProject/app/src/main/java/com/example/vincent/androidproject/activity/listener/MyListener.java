@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.gson.Gson;
-import com.google.gson.internal.bind.ArrayTypeAdapter;
 
 import java.util.ArrayList;
 
@@ -21,6 +20,16 @@ public class MyListener implements View.OnClickListener {
         this.pref = pref;
     }
 
+    //Check if data exist
+    boolean contains(ArrayList<String> list, String name) {
+        for (String item : list) {
+            if (item.equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void onClick(View v) {
         Gson gson = new Gson();
@@ -33,14 +42,18 @@ public class MyListener implements View.OnClickListener {
             Log.d("Checkpoint","pref null ");
             favoris = new ArrayList<>();
         }
-        favoris.add(id);
+        if(contains(favoris,id)){
+            favoris.remove(favoris.indexOf(id));
+        }
+        else{
+            favoris.add(id);
+        }
 
         Log.d("Favoris",pref.getString("favoris","def"));
         //// TODO: 18/05/2016  add strings to shared pref
         pref.edit().putString("favoris",gson.toJson(favoris)).apply();
 
         Log.d("Favoris",pref.getString("favoris","Bonjour"));
-
 
     }
 }
