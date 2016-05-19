@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //TODO utiliser le savedInstanceState
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         //définit l'agencement des cellules, ici de façon verticale, comme une ListView
@@ -38,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Context context = this;
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://raw.githubusercontent.com/"
-                )
+                .baseUrl("https://raw.githubusercontent.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
