@@ -3,11 +3,13 @@ package com.example.vincent.androidproject.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ public class VideoActivity extends AppCompatActivity {
     private ImageView imageView;
     private TextView title;
     private TextView description;
+    private Button button;
     private FloatingActionButton fab;
 
 
@@ -44,6 +47,8 @@ public class VideoActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.picture);
         title = (TextView) findViewById(R.id.title);
         description = (TextView) findViewById(R.id.description);
+        button = (Button) findViewById(R.id.button);
+
 
 
         if (intent != null){
@@ -54,6 +59,20 @@ public class VideoActivity extends AppCompatActivity {
             Picasso.with(imageView.getContext()).load(video.getImageUrl()).centerCrop().fit().into(imageView);
             title.setText(video.getName());
             description.setText(video.getDescription());
+
+            final String path = video.getVideoUrl();
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Uri uri = Uri.parse(path);
+                    uri = Uri.parse("vnd.youtube:" + uri.getQueryParameter("v"));
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+                    context.startActivity(intent);
+                }
+            });
+
         }
 
     }

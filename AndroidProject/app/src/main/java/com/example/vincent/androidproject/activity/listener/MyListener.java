@@ -1,6 +1,7 @@
 package com.example.vincent.androidproject.activity.listener;
 
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 
@@ -14,6 +15,13 @@ import java.util.ArrayList;
 public class MyListener implements View.OnClickListener {
     String id;
     SharedPreferences pref;
+    boolean snackBar; //If true, ne pas afficher la snackbar
+
+    public MyListener(String id, SharedPreferences pref, boolean callBack) {
+        this.id = id;
+        this.pref = pref;
+        this.snackBar = callBack;
+    }
 
     public MyListener(String id, SharedPreferences pref) {
         this.id = id;
@@ -36,7 +44,8 @@ public class MyListener implements View.OnClickListener {
         ArrayList<String> favoris;
         if(!(pref.getString("favoris","").equals(""))){
             favoris = gson.fromJson(pref.getString("favoris","fake"),ArrayList.class);
-            Log.d("Checkpoint","pref pas null ");
+
+
         }
         else{
             Log.d("Checkpoint","pref null ");
@@ -44,9 +53,20 @@ public class MyListener implements View.OnClickListener {
         }
         if(contains(favoris,id)){
             favoris.remove(favoris.indexOf(id));
+            ///Afficher popup
+            if(!snackBar){
+                Snackbar.make(v, "Supprimé des favoris", Snackbar.LENGTH_LONG)
+                        .setAction("Annuler", new MyListener(id,pref,true))
+                        .show();
+            }
         }
         else{
             favoris.add(id);
+            if(!snackBar) {
+                Snackbar.make(v, "Ajouté aux favoris", Snackbar.LENGTH_LONG)
+                        .setAction("Annuler", new MyListener(id, pref, true))
+                        .show();
+            }
         }
 
         Log.d("Favoris",pref.getString("favoris","def"));
