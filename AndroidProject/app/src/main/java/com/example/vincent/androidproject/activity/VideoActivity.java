@@ -55,6 +55,9 @@ public class VideoActivity extends AppCompatActivity {
             Video video = intent.getExtras().getParcelable("video");
             fab.setOnClickListener(new MyListener(video.getId(),pref));
 
+            if(pref.getString("favoris","").contains(video.getId()))
+                fab.setImageResource(R.drawable.ic_cancel_black_24dp);
+
 
             Picasso.with(imageView.getContext()).load(video.getImageUrl()).centerCrop().fit().into(imageView);
             title.setText(video.getName());

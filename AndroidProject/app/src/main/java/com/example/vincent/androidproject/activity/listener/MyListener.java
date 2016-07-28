@@ -1,10 +1,12 @@
 package com.example.vincent.androidproject.activity.listener;
 
 import android.content.SharedPreferences;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 
+import com.example.vincent.androidproject.R;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -16,12 +18,6 @@ public class MyListener implements View.OnClickListener {
     String id;
     SharedPreferences pref;
     boolean snackBar; //If true, ne pas afficher la snackbar
-
-    public MyListener(String id, SharedPreferences pref, boolean callBack) {
-        this.id = id;
-        this.pref = pref;
-        this.snackBar = callBack;
-    }
 
     public MyListener(String id, SharedPreferences pref) {
         this.id = id;
@@ -42,6 +38,7 @@ public class MyListener implements View.OnClickListener {
     public void onClick(View v) {
         Gson gson = new Gson();
         ArrayList<String> favoris;
+        FloatingActionButton fab = (FloatingActionButton)v;
         if(!(pref.getString("favoris","").equals(""))){
             favoris = gson.fromJson(pref.getString("favoris","fake"),ArrayList.class);
 
@@ -55,16 +52,16 @@ public class MyListener implements View.OnClickListener {
             favoris.remove(favoris.indexOf(id));
             ///Afficher popup
             if(!snackBar){
+                fab.setImageResource(R.drawable.ic_favorite_white_24dp);
                 Snackbar.make(v, "Supprimé des favoris", Snackbar.LENGTH_LONG)
-                        .setAction("Annuler", new MyListener(id,pref,true))
                         .show();
             }
         }
         else{
             favoris.add(id);
             if(!snackBar) {
+                fab.setImageResource(R.drawable.ic_cancel_black_24dp);
                 Snackbar.make(v, "Ajouté aux favoris", Snackbar.LENGTH_LONG)
-                        .setAction("Annuler", new MyListener(id, pref, true))
                         .show();
             }
         }

@@ -24,6 +24,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     //cette fonction permet de créer les viewHolder
     //et par la même indiquer la vue à inflater (à partir des layout xml)
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int itemType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cell,viewGroup,false);

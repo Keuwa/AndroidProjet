@@ -33,7 +33,6 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     public MyViewHolder(View itemView) {
         super(itemView);
 
-
         favorisTextView = (TextView) itemView.findViewById(R.id.favoris);
         context = itemView.getContext();
         //c'est ici que l'on fait nos findView
@@ -76,19 +75,5 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
                 context.startActivity(intent);
             }
         });
-    }
-
-
-
-
-    //Check if data exist
-    boolean contains(ArrayList<String> list, String name) {
-        for (String item : list) {
-            if (item.equals(name)) {
-                Log.d("contains","true");
-                return true;
-            }
-        }
-        return false;
     }
 }
